@@ -1,13 +1,13 @@
-package com.example.E_waller_application;
+package com.example.E_wallet_application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EWallerApplication {
+public class EWalletApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EWallerApplication.class, args);
+		SpringApplication.run(EWalletApplication.class, args);
 	}
 
 }

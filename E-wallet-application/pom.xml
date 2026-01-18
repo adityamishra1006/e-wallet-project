@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>E-waller-application</artifactId>
+	<artifactId>E-wallet-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>E-waller-application</name>
+	<name>E-wallet-application</name>
 	<description>E-Wallet Application</description>
 	<url/>
 	<licenses>

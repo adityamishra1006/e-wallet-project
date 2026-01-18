@@ -1,10 +1,10 @@
-package com.example.E_waller_application;
+package com.example.E_wallet_application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EWallerApplicationTests {
+class EWalletApplicationTests {
 
 	@Test
 	void contextLoads() {
