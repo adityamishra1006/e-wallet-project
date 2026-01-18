@@ -11,7 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>E-wallet-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>E-wallet-application</name>
+    <packaging>pom</packaging>
+    <name>E-wallet-application</name>
 	<description>E-Wallet Application</description>
 	<url/>
 	<licenses>
@@ -20,7 +21,13 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>userService</module>
+        <module>notification-service</module>
+        <module>transaction-service</module>
+        <module>wallet-service</module>
+    </modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
