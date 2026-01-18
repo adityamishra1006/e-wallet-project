@@ -12,5 +12,28 @@ import java.time.OffsetDateTime;
 @Setter
 @Getter
 public class User {
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String phone;
+
+    @Column(nullable = false, unique = true)
+    private String kycNumber;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Long createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private OffsetDateTime lastUpdated;
+
 }
