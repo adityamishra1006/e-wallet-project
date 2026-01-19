@@ -1,4 +1,4 @@
-package com.example;
+package com.example.config;
 
 import com.example.dto.UserCreatedPayload;
 import org.slf4j.Logger;
@@ -9,9 +9,9 @@ import org.springframework.kafka.annotation.KafkaListener;
 import tools.jackson.databind.ObjectMapper;
 
 @Configuration
-public class configNotificationKafkaConsumerConfig {
+public class NotificationKafkaConsumerConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(configNotificationKafkaConsumerConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NotificationKafkaConsumerConfig.class);
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @KafkaListener(topics = "${user.created.topic}", groupId = "email")
@@ -20,7 +20,9 @@ public class configNotificationKafkaConsumerConfig {
         MDC.put("requestId", userCreatedPayload.getRequestId());
         LOGGER.info("Read from kafka : {}", userCreatedPayload);
 
-        //Sending email 
+        //Sending email
+
+
 
         MDC.clear();
     }
