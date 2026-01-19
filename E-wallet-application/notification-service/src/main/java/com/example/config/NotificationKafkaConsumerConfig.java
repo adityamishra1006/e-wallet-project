@@ -31,8 +31,8 @@ public class NotificationKafkaConsumerConfig {
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("mishraaditya6001@gmail.com");
-        simpleMailMessage.setSubject("Welcome" + userCreatedPayload.getUserName());
-        simpleMailMessage.setText("Hi" + userCreatedPayload.getUserName()+ ", Thank you for registering with us and welcome to our community");
+        simpleMailMessage.setSubject("Welcome " + userCreatedPayload.getUserName());
+        simpleMailMessage.setText("Hi " + userCreatedPayload.getUserName()+ ", Thank you for registering with us and welcome to our community");
         simpleMailMessage.setCc("aditya.jbdl@yopmail.com");
         simpleMailMessage.setTo(userCreatedPayload.getUserEmail());
         javaMailSender.send(simpleMailMessage);
