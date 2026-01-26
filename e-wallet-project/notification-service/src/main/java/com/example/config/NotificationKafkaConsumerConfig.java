@@ -27,8 +27,6 @@ public class NotificationKafkaConsumerConfig {
         MDC.put("requestId", userCreatedPayload.getRequestId());
         log.info("Read from kafka : {}", userCreatedPayload);
 
-//        emzq mhdj dioc kkio
-
         // Send Email
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("mishraaditya6001@gmail.com");
@@ -41,3 +39,5 @@ public class NotificationKafkaConsumerConfig {
         MDC.clear();
     }
 }
+
+//2:05:06
