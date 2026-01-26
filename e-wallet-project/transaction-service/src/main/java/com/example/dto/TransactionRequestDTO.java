@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class TransactionDTO {
+public class TransactionRequestDTO {
     @NotNull
     private Long fromUserId;
 
