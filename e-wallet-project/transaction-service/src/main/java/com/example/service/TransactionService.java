@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dto.TransactionDTO;
+import com.example.dto.TransactionRequestDTO;
+import com.example.dto.TransactionStatusDTO;
 import com.example.dto.TxnInitPayload;
 import com.example.entity.Transaction;
 import com.example.entity.TxnStatus;
@@ -8,6 +9,7 @@ import com.example.repo.TransactionRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,7 +32,7 @@ public class TransactionService {
     private String txnInitTopic;
 
     @Transactional
-    public String initTransaction(TransactionDTO requestDTO) throws ExecutionException, InterruptedException {
+    public String initTransaction(TransactionRequestDTO requestDTO) throws ExecutionException, InterruptedException {
         Transaction transaction = new Transaction();
         transaction.setFromUserId(requestDTO.getFromUserId());
         transaction.setToUserId(requestDTO.getToUserId());
@@ -52,5 +54,15 @@ public class TransactionService {
         log.info("Pushed txnInitPayload to kafka: {}",future.get());
 
         return transaction.getTxnId();
+    }
+
+    public TransactionStatusDTO getStatus(String txnId){
+        Transaction transaction = transactionRepo.findByTxnId(txnId);
+        TransactionStatusDTO txnStatusDto = new TransactionStatusDTO();
+        if(transaction != null){
+            txnStatusDto.setReason(transaction.getReason());
+            txnStatusDto.setStatus(transaction.getStatus());
+        }
+        return txnStatusDto;
     }
 }
