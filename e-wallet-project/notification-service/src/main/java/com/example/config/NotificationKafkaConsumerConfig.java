@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.mail.javamail.JavaMailSender;
 import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
@@ -20,5 +21,9 @@ public class NotificationKafkaConsumerConfig {
         MDC.put("requestId", userCreatedPayload.getRequestId());
         log.info("Read from kafka : {}", userCreatedPayload);
 
+        // Send Email
+        JavaMailSender
+
+        MDC.clear();
     }
 }
