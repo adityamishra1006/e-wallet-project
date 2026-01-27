@@ -42,6 +42,9 @@ public class WalletService {
             fromWallet.setBalance(fromWallet.getBalance() - txnInitPayload.getAmount());
             toWallet.setBalance(toWallet.getBalance() + txnInitPayload.getAmount());
 
+            walletRepo.save(fromWallet);
+            walletRepo.save(toWallet);
+
             txnCompletedPayload.setSuccess(true);
         }
         Future<SendResult<String,Object>> future  = kafkaTemplate.send(txnCompletedTopic,txnInitPayload.getFromUserId().toString(),txnCompletedPayload);
