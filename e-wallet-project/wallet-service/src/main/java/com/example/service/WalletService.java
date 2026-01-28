@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dto.TxnCompletedPayload;
 import com.example.dto.TxnInitPayload;
+import com.example.dto.WalletUpdatePayload;
 import com.example.entity.Wallet;
 import com.example.repo.WalletRepo;
 import jakarta.transaction.Transactional;
@@ -26,6 +27,9 @@ public class WalletService {
     @Value("${txn.completed.topic}")
     private String txnCompletedTopic;
 
+    @Value("${wallet.updated.topic}")
+    private String walletUpdatedTopic;
+
     @Transactional
     public void walletTxn(TxnInitPayload txnInitPayload) throws ExecutionException, InterruptedException {
         Wallet fromWallet = walletRepo.findByUserId(txnInitPayload.getFromUserId());
@@ -41,11 +45,27 @@ public class WalletService {
 
             fromWallet.setBalance(fromWallet.getBalance() - txnInitPayload.getAmount());
             toWallet.setBalance(toWallet.getBalance() + txnInitPayload.getAmount());
-
             walletRepo.save(fromWallet);
             walletRepo.save(toWallet);
-
             txnCompletedPayload.setSuccess(true);
+
+            WalletUpdatePayload walletUpdatedPayload1 = new WalletUpdatePayload(
+                    fromWallet.getUserEmail(),
+                    fromWallet.getBalance(),
+                    txnInitPayload.getRequestId()
+            );
+
+            WalletUpdatePayload walletUpdatedPayload2 = new WalletUpdatePayload(
+                    toWallet.getUserEmail(),
+                    toWallet.getBalance(),
+                    txnInitPayload.getRequestId()
+            );
+
+            Future<SendResult<String,Object>> walletUpdatedFuture1  = kafkaTemplate.send(walletUpdatedTopic,walletUpdatedPayload1.getUserEmail(),walletUpdatedPayload1);
+            log.info("Pushed WalletUpdated to kafka: {}",walletUpdatedFuture1.get());
+
+            Future<SendResult<String,Object>> walletUpdatedFuture2  = kafkaTemplate.send(walletUpdatedTopic,walletUpdatedPayload2.getUserEmail(),walletUpdatedPayload2);
+            log.info("Pushed WalletUpdated to kafka: {}",walletUpdatedFuture2.get());
         }
         Future<SendResult<String,Object>> future  = kafkaTemplate.send(txnCompletedTopic,txnInitPayload.getFromUserId().toString(),txnCompletedPayload);
         log.info("Pushed TxnCompleted to kafka: {}",future.get());
