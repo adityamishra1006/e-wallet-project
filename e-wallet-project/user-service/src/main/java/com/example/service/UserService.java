@@ -3,6 +3,7 @@ package com.example.service;
 
 import com.example.dto.UserCreatedPayload;
 import com.example.dto.UserDTO;
+import com.example.dto.UserProfileDTO;
 import com.example.entity.User;
 import com.example.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -53,4 +54,17 @@ public class UserService {
 
         return user.getId();
     }
+
+    public UserProfileDTO getUserProfile(Long userId){
+        User user = userRepo.findById(userId).get();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(user.getEmail());
+        userDTO.setName(user.getName());
+        userDTO.setPhone(user.getPhone());
+        userDTO.setKycNumber(user.getKycNumber());
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setUserDetails(userDTO);
+        //Call API if Wallet Service
+    }
 }
+//50:50
