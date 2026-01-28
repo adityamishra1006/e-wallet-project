@@ -1,9 +1,11 @@
 package com.example.service;
 
 
+import com.example.client.WalletServiceClient;
 import com.example.dto.UserCreatedPayload;
 import com.example.dto.UserDTO;
 import com.example.dto.UserProfileDTO;
+import com.example.dto.WalletBalanceDTO;
 import com.example.entity.User;
 import com.example.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -26,6 +28,8 @@ public class UserService {
     private final UserRepo userRepo;
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    private final WalletServiceClient walletServiceClient;
 
     @Value("${user.created.topic}")
     private String userCreatedTopic;
@@ -64,7 +68,9 @@ public class UserService {
         userDTO.setKycNumber(user.getKycNumber());
         UserProfileDTO userProfileDTO = new UserProfileDTO();
         userProfileDTO.setUserDetails(userDTO);
-        //Call API if Wallet Service
+        //Call API of Wallet Service
+        WalletBalanceDTO walletBalanceDTO = walletServiceClient.getBalance(userId).getBody();
+        userProfileDTO.setWalletBalance(walletBalanceDTO.getBalance());
+        return userProfileDTO;
     }
 }
-//50:50
