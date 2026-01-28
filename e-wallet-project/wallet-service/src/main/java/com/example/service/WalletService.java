@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dto.TxnCompletedPayload;
 import com.example.dto.TxnInitPayload;
+import com.example.dto.WalletBalanceDTO;
 import com.example.dto.WalletUpdatePayload;
 import com.example.entity.Wallet;
 import com.example.repo.WalletRepo;
@@ -29,6 +30,13 @@ public class WalletService {
 
     @Value("${wallet.updated.topic}")
     private String walletUpdatedTopic;
+
+    public WalletBalanceDTO walletBalance(Long userId){
+        Wallet wallet = walletRepo.findByUserId(userId);
+        WalletBalanceDTO walletBalanceDTO = new WalletBalanceDTO();
+        walletBalanceDTO.setBalance(wallet.getBalance());
+        return walletBalanceDTO;
+    }
 
     @Transactional
     public void walletTxn(TxnInitPayload txnInitPayload) throws ExecutionException, InterruptedException {
