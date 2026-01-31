@@ -41,8 +41,4 @@ public class PGController {
         PaymentInitResponse response = transactionService.generatePaymentPage(pageRequest);
         return ResponseEntity.ok(response);
     }
-
-
-
-
 }
